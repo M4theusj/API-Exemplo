@@ -12,9 +12,36 @@ function getPokemonList(){
     })
 }
 
-// function getPokemonId(){
-//     fetch(BASEURL + 5 ).then( (Response) => { Response.json()}
-// }
+function getPokemonById(id) {
+    return fetch(BASEURL + id)
+        .then(response => {
+            if (response.status === 200) {
+                return response.json()
+            }
+        })
+        
+}
+
+function showPokemonByIdPrompt() {
+    const pokemonId = prompt("Digite o ID do Pokémon:")
+    if (pokemonId) {
+        getPokemonById(pokemonId)
+            .then(pokemon => {
+                displayPokemon(pokemon)
+            })
+    }
+}
+
+function displayPokemon(pokemon) {
+    let liPokemon = document.createElement("li")
+    let liPokemonImg = document.createElement("img")
+    liPokemonImg.src = pokemon.sprites.front_default
+    liPokemon.innerHTML = `${pokemon.name}`
+    liPokemon.appendChild(liPokemonImg)
+
+    document.getElementById("ListaPokemons").innerHTML = ""
+    document.getElementById("ListaPokemons").appendChild(liPokemon)
+}
 
 function showSixPokemon(){
     let listaPokemons = []
